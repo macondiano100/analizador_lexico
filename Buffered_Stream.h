@@ -15,7 +15,6 @@ class buffered_stream {
     std::string sig_linea();
     bool linea_vacia();
     bool fin_archivo()const;
-    bool is_error() const ;
 public:
     explicit buffered_stream(std::istream& archivo): archivo(archivo){}
     operator bool() {
