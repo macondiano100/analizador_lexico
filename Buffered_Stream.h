@@ -15,6 +15,7 @@ class buffered_stream {
     std::string sig_linea();
     bool linea_vacia();
     bool fin_archivo()const;
+    void guardar_sig_linea();
 public:
     explicit buffered_stream(std::istream& archivo): archivo(archivo){}
     operator bool() {
@@ -22,6 +23,9 @@ public:
     }
     bool eof();
     char sig_caracter() ;
+
+    void retroceso();
+
 };
 
 
