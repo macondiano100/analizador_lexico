@@ -39,6 +39,8 @@ int Lexico::sig_estado(int estado_actual, char simbolo) {
         case 18:
             if(simbolo=='&') sig=19;
             break;
+        default:
+            break;
     }
     return sig;
 }
@@ -81,10 +83,10 @@ std::string Lexico::sig_simbolo() {
     }
     return simbolo;
 }
-bool Lexico::set_error(bool e)
+void Lexico::set_error(bool e)
 {
     error =e;
-    if(e==true){
+    if(e){
         estado = -1;
     }
 }
