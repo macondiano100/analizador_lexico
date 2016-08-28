@@ -16,13 +16,18 @@ class Lexico {
     int estado;
     bool continua;
     bool error;
-    bool is_error() const ;
     buffered_stream lector_archivo;
-    static constexpr char longitud_fija[]={'+', '-', '/', '*', '=', '<', '>', '!', '|', '&', '(',')'
-            ,';',' ', '\n','\t'};
+    static const char longitud_fija[];
+    static const int estados_aceptacion[];
+
+    void skip_blank();
+    int sig_estado(int estado_actual, char simbolo);
+    void avanza_estado(int estado, char caracter);
+    bool is_aceptacion(int estado);
     public:
     explicit Lexico(std::istream &archivo):simbolo(),estado(0),continua(false),error(false),lector_archivo(archivo) {}
     std::string sig_simbolo();
+    bool is_error() const ;
 
 };
 
