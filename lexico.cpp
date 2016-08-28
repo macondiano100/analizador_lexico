@@ -6,3 +6,5 @@
 bool Lexico::is_error() const{
     return error;
 }
+
+
