@@ -73,6 +73,7 @@ std::string Lexico::sig_simbolo() {
                 {
                     while (!is_longitud_fija(car)) {
                         simbolo += car;
+                        car = lector_archivo.sig_caracter();
                     };
                     if(car!=EOF)lector_archivo.retroceso();
                     continua = false;
