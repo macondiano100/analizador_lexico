@@ -6,7 +6,7 @@
 const char Lexico::longitud_fija[]={'+', '-', '/', '*', '=', '<', '>', '!', '|', '&', '(',')'
         ,';',' ', '\n','\t',EOF};
 const int Lexico::estados_aceptacion[]=
-        {11,10,9,12,13,8,14,15,16,14};
+        {11,10,9,12,13,8,14,15,16,14,20};
 bool Lexico::is_error() const{
     return error;
 }
@@ -27,6 +27,7 @@ int Lexico::sig_estado(int estado_actual, char simbolo) {
             else if(simbolo==')'||simbolo=='(') sig=16;
             else if(simbolo=='|') sig=17;
             else if(simbolo=='&') sig=18;
+            else if(simbolo=='\n') sig=20;
             break;
         case 11:
         case 9:
