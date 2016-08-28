@@ -24,6 +24,8 @@ class Lexico {
     int sig_estado(int estado_actual, char simbolo);
     void avanza_estado(int estado, char caracter);
     bool is_aceptacion(int estado);
+    bool is_longitud_fija(int estado);
+    bool set_error(bool e);
     public:
     explicit Lexico(std::istream &archivo):simbolo(),estado(0),continua(false),error(false),lector_archivo(archivo) {}
     std::string sig_simbolo();
