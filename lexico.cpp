@@ -3,6 +3,7 @@
 //
 #include <cctype>
 #include "lexico.h"
+#define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
 const char Lexico::longitud_fija[]={'+', '-', '/', '*', '=', '<', '>', '!', '|', '&', '(',')'
         ,';',' ', '\n','\t',EOF};
 const int Lexico::estados_aceptacion[]=
@@ -85,7 +86,7 @@ std::string Lexico::sig_simbolo() {
             }
             else{
                 if(is_aceptacion(estado)&&
-                        (is_longitud_fija(simbolo.back())//longitud fija puede estar "pegado" a cualquier cosa
+                        (is_longitud_fija(simbolo[simbolo.size()-1])//longitud fija puede estar "pegado" a cualquier cosa
                          ||isspace(car)||car==EOF||is_longitud_fija(car))
                         ||estado==6){//longitud puede estar "pegado" a fijo
                     if(car!=EOF)
@@ -116,11 +117,11 @@ void Lexico::set_error(bool e)
 }
 bool Lexico::is_aceptacion(int estado)
 {
-    return std::count(std::begin(estados_aceptacion),std::end(estados_aceptacion),estado)>0;
+    return std::count(estados_aceptacion,estados_aceptacion+NELEMS(estados_aceptacion),estado)>0;
 }
 bool Lexico::is_longitud_fija(int estado)
 {
-    return std::count(std::begin(longitud_fija),std::end(longitud_fija),estado)>0;
+    return std::count(longitud_fija,longitud_fija+NELEMS(longitud_fija),estado)>0;
 }
 void Lexico::skip_blank() {
     char car;
