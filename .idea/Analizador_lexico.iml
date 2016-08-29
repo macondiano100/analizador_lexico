@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/lexico.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/buffered_stream.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Buffered_Stream.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/buffered_stream.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lexico.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />

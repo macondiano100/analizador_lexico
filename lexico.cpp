@@ -72,9 +72,9 @@ std::string Lexico::sig_simbolo() {
     simbolo="";
     continua = true;
     char car=lector_archivo.sig_caracter();
+    set_error(false);
     if(car == EOF) simbolo=EOF;
     else{
-        set_error(false);
         while (continua)
         {
             int sig=sig_estado(estado,car);
