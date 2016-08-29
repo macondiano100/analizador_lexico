@@ -86,7 +86,8 @@ std::string Lexico::sig_simbolo() {
             else{
                 if(is_aceptacion(estado)&&
                         (is_longitud_fija(simbolo.back())//longitud fija puede estar "pegado" a cualquier cosa
-                         ||isspace(car)||car==EOF||is_longitud_fija(car))){//longitud puede estar "pegado" a fijo
+                         ||isspace(car)||car==EOF||is_longitud_fija(car))
+                        ||estado==6){//longitud puede estar "pegado" a fijo
                     if(car!=EOF)
                         lector_archivo.retroceso();
                     continua = false;
