@@ -4,9 +4,9 @@
 #include <cctype>
 #include "lexico.h"
 const char Lexico::longitud_fija[]={'+', '-', '/', '*', '=', '<', '>', '!', '|', '&', '(',')'
-        ,';',' ', '\n','\t',EOF};
+        ,';',' ', '\n','\t','\"',EOF};
 const int Lexico::estados_aceptacion[]=
-        {1,2,6,11,10,9,12,13,8,14,15,16,14,20};
+        {1,2,4,6,11,10,9,12,13,8,14,15,16,14,20};
 bool Lexico::is_error() const{
     return error;
 }
@@ -37,6 +37,13 @@ int Lexico::sig_estado(int estado_actual, char simbolo) {
             break;
         case 2:
             if(isdigit(simbolo)) sig=2;
+            else if(simbolo=='.') sig=3;
+            break;
+        case 3:
+            if(isdigit(simbolo)) sig=4;
+            break;
+        case 4:
+            if(isdigit(simbolo)) sig=4;
             break;
         case 5:
             if(simbolo!=EOF&&simbolo!='"') sig=5;
@@ -77,7 +84,9 @@ std::string Lexico::sig_simbolo() {
                 car=lector_archivo.sig_caracter();
             }
             else{
-                if(is_aceptacion(estado)){
+                if(is_aceptacion(estado)&&
+                        (is_longitud_fija(simbolo.back())//longitud fija puede estar "pegado" a cualquier cosa
+                         ||isspace(car)||car==EOF||is_longitud_fija(car))){//longitud puede estar "pegado" a fijo
                     if(car!=EOF)
                         lector_archivo.retroceso();
                     continua = false;
