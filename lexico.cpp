@@ -124,7 +124,7 @@ bool Lexico::is_longitud_fija(int estado)
 }
 void Lexico::skip_blank() {
     char car;
-    while((car=lector_archivo.sig_caracter())==' '||car=='\t'){};
+    while((car=lector_archivo.sig_caracter())==' '||car=='\t'||car=='\r'){};
     if(car!=EOF) lector_archivo.retroceso();
 }
 
