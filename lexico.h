@@ -10,7 +10,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
-#include "buffered_stream.h"
+#include "Buffered_Stream.h"
 class Lexico {
     std::string simbolo;
     int estado;

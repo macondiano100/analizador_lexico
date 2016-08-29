@@ -4,7 +4,7 @@
 #include <cctype>
 #include "lexico.h"
 const char Lexico::longitud_fija[]={'+', '-', '/', '*', '=', '<', '>', '!', '|', '&', '(',')'
-        ,';',' ', '\n','\t',EOF};
+        ,';',' ',',', '\n','\t',EOF};
 const int Lexico::estados_aceptacion[]=
         {1,2,4,6,11,10,9,12,13,8,14,15,16,14,20};
 bool Lexico::is_error() const{
@@ -21,7 +21,7 @@ int Lexico::sig_estado(int estado_actual, char simbolo) {
             else if(simbolo=='!') sig=9;
             else if(simbolo=='+'||simbolo=='-')
                 sig=12;
-            else if(simbolo==';') sig=13;
+            else if(simbolo==';'||simbolo==',') sig=13;
             else if(simbolo=='*') sig=14;
             else if(simbolo=='/') sig=15;
             else if(simbolo==')'||simbolo=='(') sig=16;

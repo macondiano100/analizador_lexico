@@ -2,7 +2,7 @@
 // Created by Antonio on 27/08/2016.
 //
 
-#include "buffered_stream.h"
+#include "Buffered_Stream.h"
 char buffered_stream::sig_caracter() {
     if(linea_vacia()){
         guardar_sig_linea();
