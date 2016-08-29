@@ -31,5 +31,5 @@
 *.app
 
 #text tests
-.txt
+*.txt
 
