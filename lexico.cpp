@@ -152,8 +152,8 @@ std::string Lexico::sig_simbolo() {
                 }
             }
         }
+        token = Token(get_tipo(estado),simbolo);
     }
-    token = Token(get_tipo(estado),simbolo);
     return simbolo;
 }
 void Lexico::set_error(bool e)
