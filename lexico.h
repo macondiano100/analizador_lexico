@@ -21,6 +21,7 @@ class Lexico: public std::iterator<std::input_iterator_tag,Token,void,const Toke
     bool continua;
     bool error;
     buffered_stream lector_archivo;
+    Token token;
 
     void skip_blank();
     int sig_estado(int estado_actual, char simbolo);
@@ -28,10 +29,11 @@ class Lexico: public std::iterator<std::input_iterator_tag,Token,void,const Toke
     bool is_aceptacion(int estado);
     bool is_longitud_fija(int estado);
     void set_error(bool e);
-
+    Token::Tipo_Token get_tipo(int);
 
     public:
-    explicit Lexico(std::istream &archivo):simbolo(),estado(0),continua(false),error(false),lector_archivo(archivo) {}
+    explicit Lexico(std::istream &archivo):simbolo(),estado(0),continua(false),error(false),lector_archivo(archivo)
+            ,token() {}
     std::string sig_simbolo();
     bool is_error() const ;
 

@@ -6,11 +6,53 @@
 const char Lexico::longitud_fija[]={'+', '-', '/', '*', '=', '<', '>', '!', '|', '&', '(',')'
         ,';',' ',',', '\n','\t',EOF};
 const int Lexico::estados_aceptacion[]=
-        {1,2,4,6,11,10,9,12,13,8,14,15,16,14,20};
+        {1,2,4,6,11,10,9,12,13,8,14,15,16,19,20,21};
 bool Lexico::is_error() const{
     return error;
 }
-
+Token::Tipo_Token Lexico::get_tipo(int estado)
+{
+    using Tipo_Token=Token::Tipo_Token;
+    Tipo_Token tipo;
+    switch (estado)
+    {
+        case 1:tipo = Tipo_Token::IDENTIFICADOR;
+            break;
+        case 2:tipo = Tipo_Token::ENTERO;
+            break;
+        case 4:tipo = Tipo_Token::REAL;
+            break;
+        case 6:tipo = Tipo_Token::CADENA;
+            break;
+        case 8:
+        case 11:
+            tipo = Tipo_Token::OP_REL;
+            break;
+        case 10:
+            tipo = Tipo_Token::OP_ASIGNACION;
+            break;
+        case 12:
+            tipo = Tipo_Token::OP_SUMA;
+            break;
+        case 13:tipo = Tipo_Token::SEMICOLON;
+            break;
+        case 14:tipo = Tipo_Token::OP_MULT;
+            break;
+        case 15:tipo= Tipo_Token::OP_DIV;
+            break;
+        case 16:tipo= Tipo_Token::PARENTESIS_ABRE;
+            break;
+        case 19:tipo = Tipo_Token::OP_LOG;
+            break;
+        case 21: tipo = Tipo_Token::PARENTESIS_CIERRA;
+            break;
+        case 20:tipo = Tipo_Token::SALTO;
+            break;
+        default:
+            tipo = Tipo_Token::UNKNOWN;
+    }
+    return tipo;
+}
 int Lexico::sig_estado(int estado_actual, char simbolo) {
     int sig=-1;
     switch (estado_actual)
@@ -24,7 +66,8 @@ int Lexico::sig_estado(int estado_actual, char simbolo) {
             else if(simbolo==';'||simbolo==',') sig=13;
             else if(simbolo=='*') sig=14;
             else if(simbolo=='/') sig=15;
-            else if(simbolo==')'||simbolo=='(') sig=16;
+            else if(simbolo=='(') sig=16;
+            else if(simbolo==')') sig=21;
             else if(simbolo=='|') sig=17;
             else if(simbolo=='&') sig=18;
             else if(simbolo=='\n') sig=20;
@@ -48,9 +91,9 @@ int Lexico::sig_estado(int estado_actual, char simbolo) {
         case 5:
             if(simbolo!=EOF&&simbolo!='"') sig=5;
             else if(simbolo=='"') sig=6;
-        case 11:
         case 9:
         case 10:
+        case 11:
             if(simbolo=='=') sig=8;
             break;
         case 17:
@@ -73,7 +116,10 @@ std::string Lexico::sig_simbolo() {
     continua = true;
     char car=lector_archivo.sig_caracter();
     set_error(false);
-    if(car == EOF) simbolo=EOF;
+    if(car == EOF) {
+        simbolo = EOF;
+        token = Token();
+    }
     else{
         while (continua)
         {
@@ -84,10 +130,12 @@ std::string Lexico::sig_simbolo() {
                 car=lector_archivo.sig_caracter();
             }
             else{
-                if(is_aceptacion(estado)&&
+                if(
+                        is_aceptacion(estado)&&
                         (is_longitud_fija(simbolo.back())//longitud fija puede estar "pegado" a cualquier cosa
                          ||isspace(car)||car==EOF||is_longitud_fija(car))
-                        ||estado==6){//longitud puede estar "pegado" a fijo
+                        ||estado==6)//longitud puede estar "pegado" a fijo
+                {
                     if(car!=EOF)
                         lector_archivo.retroceso();
                     continua = false;
@@ -105,6 +153,7 @@ std::string Lexico::sig_simbolo() {
             }
         }
     }
+    token = Token(get_tipo(estado),simbolo);
     return simbolo;
 }
 void Lexico::set_error(bool e)
@@ -132,6 +181,10 @@ void Lexico::skip_blank() {
 void Lexico::avanza_estado(int estado, char caracter) {
     this->estado=estado;
     simbolo.push_back(caracter);
+}
+
+const Token &Lexico::operator*() {
+    return token;
 }
 
 

@@ -13,7 +13,7 @@ int main()
     while(!error_lexico&&simbolo[0]!=EOF)
     {
         error_lexico = lexico.is_error();
-        cout<<"("<<simbolo<<")"<<(error_lexico?"error!":"")<<endl;
+        cout<<"("<<simbolo<<")"<<(error_lexico?"error!":"")<<"<"<< static_cast<int>((*lexico).tipo())<<">"<<endl;
         simbolo=lexico.sig_simbolo();
     }
     salida<<(error_lexico?"0":"1");
