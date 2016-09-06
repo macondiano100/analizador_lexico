@@ -133,8 +133,8 @@ std::string Lexico::sig_simbolo() {
                 if(
                         is_aceptacion(estado)&&
                         (is_longitud_fija(simbolo.back())//longitud fija puede estar "pegado" a cualquier cosa
-                         ||isspace(car)||car==EOF||is_longitud_fija(car))
-                        ||estado==6)//longitud puede estar "pegado" a fijo
+                         ||isspace(car)||car==EOF||is_longitud_fija(car)||estado==6)//longitud puede estar "pegado" a fijo
+                        )
                 {
                     if(car!=EOF)
                         lector_archivo.retroceso();
@@ -185,6 +185,20 @@ void Lexico::avanza_estado(int estado, char caracter) {
 
 const Token &Lexico::operator*() {
     return token;
+}
+
+Lexico &Lexico::operator++() {
+    sig_simbolo();
+    return *this;
+}
+
+const Token &Lexico::operator++(int) {
+    sig_simbolo();
+    return token;
+}
+
+const Token *Lexico::operator->() {
+    return &token;
 }
 
 
